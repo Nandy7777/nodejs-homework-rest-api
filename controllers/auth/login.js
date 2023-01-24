@@ -1,6 +1,9 @@
-const { HttpError } = require('../../helpers');
 const { User } = require('../../models/user');
 const bcrypt = require('bcrypt');
+const { Unauthorized } = require('http-errors');
+const jwt = require('jsonwebtoken');
+
+// const { JWT_SECRET } = process.env;
 
 async function login(req, res, next) {
     const { email, password } = req.body;
@@ -10,17 +13,21 @@ async function login(req, res, next) {
     });
 
     if (!storedUser) {
-        throw new HttpError(401, 'Email or password is wrong');
+        throw Unauthorized('Email or password is wrong');
     }
 
     const isPasswordValid = await bcrypt.compare(password, storedUser.password);
 
     if (!isPasswordValid) {
-      throw new HttpError(401, 'password is not valid');
+      throw Unauthorized('password is not valid');
     }
 
+  const token = jwt.sign({ id: storedUser._id }, process.env.JWT_SECRET, {
+      expiresIn: "1h",
+    });
+
   res.json({
-    token: 'Token',
+    token,
   });
 }
 
