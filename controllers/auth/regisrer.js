@@ -14,11 +14,11 @@ async function register(req, res, next) {
           password: hashedPassword,
         });
          res.status(201).json({
-             data: {
-               email,
-             id: savedUser._id,
+           savedUser: {
+             email,
+             subscription: 'starter',
            },
-         })
+         });
 
     } catch(error){
         console.log('error while saving user', error.name, error.message)

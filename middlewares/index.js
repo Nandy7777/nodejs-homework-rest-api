@@ -18,11 +18,11 @@ async function auth(req, res, next) {
   const [type, token] = authHeader.split(" ");
 
   if (type !== "Bearer") {
-    throw Unauthorized('Not authorized3');
+    throw Unauthorized('Not authorized');
   }
 
   if (!token) {
-    throw Unauthorized('Not authorized2');
+    throw Unauthorized('Not authorized');
   }
 
   try {
@@ -30,11 +30,10 @@ async function auth(req, res, next) {
     const user = await User.findById(id);
     console.log('user', user)
 
-
     req.user = user;
   } catch (error) {
     if (error.name === "TokenExpiredError" || error.name === "JsonWebTokenError") {
-      throw Unauthorized('Not authorized1');
+      throw Unauthorized('Not authorized');
     }
     throw error;
   }
