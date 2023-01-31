@@ -20,12 +20,11 @@ const schema = mongoose.Schema(
     },
     avatarURL: {
       type: String,
-      default: '',
     },
     token: {
       type: String,
       default: null,
-    }
+    },
   },
   {
     versionKey: false,
