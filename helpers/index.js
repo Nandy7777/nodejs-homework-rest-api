@@ -19,7 +19,7 @@ function HttpError(status, message) {
 
 async function sendMail({ to, html, subject }) {
   const email = {
-    from: 'info@mymovies.com',
+    from: 'info@mycontacts.com',
     to,
     subject,
     html,
